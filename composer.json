@@ -3,7 +3,7 @@
 	"type": "library",
 	"description": "'Convention over configuration' layer for Nette framework.",
 	"keywords": ["nette", "shake", "php"],
-	"homepage": "https://bitbucket.org/nanuqcz/shake/wiki/Home",
+	"homepage": "https://bitbucket.org/nanuqcz/shake-shake/wiki",
 	"authors": [
 		{
 			"name": "Michal Mikoláš",
@@ -27,6 +27,6 @@
 	],
 	"require": {
 		"php": ">=5.3.0",
-		"nette/di": ">=2.2.0",
+		"nette/di": ">=2.2.0"
 	}
 }
