@@ -1,0 +1,32 @@
+{
+	"name": "shake/di",
+	"type": "library",
+	"description": "'Convention over configuration' layer for Nette framework.",
+	"keywords": ["nette", "shake", "php"],
+	"homepage": "https://bitbucket.org/nanuqcz/shake/wiki/Home",
+	"authors": [
+		{
+			"name": "Michal Mikoláš",
+			"homepage": "http://michal.webshake.cz"
+		}
+	],
+	"minimum-stability": "dev",
+	"repositories": [
+		{
+			"type": "package",
+			"package": {
+				"name": "jrslv/vp-nette-bootstrap",
+				"version": "master",
+				"source": {
+					"url": "https://github.com/jrslv/vp-nette-bootstrap.git",
+					"type": "git",
+					"reference": "master"
+				}
+			}
+		}
+	],
+	"require": {
+		"php": ">=5.3.0",
+		"nette/di": ">=2.2.0",
+	}
+}
