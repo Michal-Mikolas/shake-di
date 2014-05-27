@@ -25,6 +25,9 @@
 			}
 		}
 	],
+	"autoload": {
+		"classmap": [""]
+	},
 	"require": {
 		"php": ">=5.3.0",
 		"nette/di": ">=2.2.0"
