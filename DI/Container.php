@@ -1,8 +1,8 @@
 <?php
 namespace Shake\DI;
 
-use \Shake\Utils\Strings;
-use \Nette;
+use Shake\Utils\Strings;
+use Nette;
 
 
 /**
@@ -41,7 +41,7 @@ class Container extends Nette\DI\Container
 
 			// Service
 			if (strrpos($name, 'Service') === (strlen($name) - 7)) {
-				$this->registry[$name] = $this->createService($name);
+				$this->registry[$name] = $this->createAppService($name);
 				return $this->registry[$name];
 			}
 
@@ -57,8 +57,7 @@ class Container extends Nette\DI\Container
 	 */
 	public function &__get($name)
 	{
-		$service = $this->getService($name);
-		return $service;
+		return $this->getService($name);
 	}
 
 
@@ -94,7 +93,7 @@ class Container extends Nette\DI\Container
 	 * @param string
 	 * @return object
 	 */
-	private function createService($serviceName)
+	private function createAppService($serviceName)
 	{
 		$className = $serviceName;
 		$className[0] = strtoupper($className[0]);
