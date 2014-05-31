@@ -57,7 +57,8 @@ class Container extends Nette\DI\Container
 	 */
 	public function &__get($name)
 	{
-		return $this->getService($name);
+		$service = $this->getService($name);
+		return $service;
 	}
 
 
@@ -71,13 +72,15 @@ class Container extends Nette\DI\Container
 		$className = $serviceName;
 		$className[0] = strtoupper($className[0]);
 
+		$repositoryDependencies = $this->findRepositoryDependencies();
+
 		// User's repository
 		if (class_exists($className)) {
-			$repository = $this->createInstance($className);
+			$repository = $this->createInstance($className, $repositoryDependencies);
 		
 		// Virtual repository
 		} else {
-			$repository = $this->createInstance('\Shake\Repository');
+			$repository = $this->createInstance('Shake\Scaffolding\Repository', $repositoryDependencies);
 
 			$tableName = substr($className, 0, strrpos($className, 'Repository'));
 			$tableName = Strings::toUnderscoreCase($tableName);
@@ -85,6 +88,25 @@ class Container extends Nette\DI\Container
 		}
 
 		return $repository;
+	}
+
+
+
+	/**
+	 * Search Nette\Database\Context or Shake\Database\Context and return it in array
+	 * @return array
+	 * @todo Remove this after Nette\Database\Context implements some interface
+	 */
+	private function findRepositoryDependencies()
+	{
+		if ($databaseContext = $this->getByType('Shake\\Database\\Context', FALSE)) {
+			return array($databaseContext);
+		
+		} elseif ($databaseContext = $this->getByType('Nette\\Database\\Context', FALSE)) {
+			return array($databaseContext);
+		}
+
+		return array();	
 	}
 
 
@@ -104,7 +126,7 @@ class Container extends Nette\DI\Container
 		
 		// Virtual service
 		} else {
-			$service = $this->createInstance('\Shake\Service');
+			$service = $this->createInstance('Shake\Scaffolding\Service');
 
 			$repositoryName = substr($className, 0, strrpos($className, 'Service'));
 			$repositoryName .= 'Repository';
