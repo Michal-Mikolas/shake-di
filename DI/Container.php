@@ -8,6 +8,7 @@ use Nette;
 /**
  * DI\Container
  *
+ * @package Shake
  * @author  Michal Mikoláš <nanuqcz@gmail.com>
  */
 class Container extends Nette\DI\Container
@@ -93,13 +94,13 @@ class Container extends Nette\DI\Container
 
 
 	/**
-	 * Search Nette\Database\Context or Shake\Database\Context and return it in array
+	 * Search Nette\Database\Context or Shake\Database\Orm\Context and return it in array
 	 * @return array
 	 * @todo Remove this after Nette\Database\Context implements some interface
 	 */
 	private function findRepositoryDependencies()
 	{
-		if ($databaseContext = $this->getByType('Shake\\Database\\Context', FALSE)) {
+		if ($databaseContext = $this->getByType('Shake\\Database\\Orm\\Context', FALSE)) {
 			return array($databaseContext);
 		
 		} elseif ($databaseContext = $this->getByType('Nette\\Database\\Context', FALSE)) {
