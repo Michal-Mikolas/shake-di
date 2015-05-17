@@ -72,6 +72,7 @@ class Container extends Nette\DI\Container
 	{
 		$className = $serviceName;
 		$className[0] = strtoupper($className[0]);
+		$className = "App\\Model\\$className";
 
 		$repositoryDependencies = $this->findRepositoryDependencies();
 
@@ -83,7 +84,7 @@ class Container extends Nette\DI\Container
 		} else {
 			$repository = $this->createInstance('Shake\Scaffolding\Repository', $repositoryDependencies);
 
-			$tableName = substr($className, 0, strrpos($className, 'Repository'));
+			$tableName = substr($serviceName, 0, strrpos($serviceName, 'Repository'));
 			$tableName = Strings::toUnderscoreCase($tableName);
 			$repository->setTableName($tableName);
 		}
@@ -120,6 +121,7 @@ class Container extends Nette\DI\Container
 	{
 		$className = $serviceName;
 		$className[0] = strtoupper($className[0]);
+		$className = "App\\Model\\$className";
 
 		// User's service
 		if (class_exists($className)) {
@@ -129,7 +131,7 @@ class Container extends Nette\DI\Container
 		} else {
 			$service = $this->createInstance('Shake\Scaffolding\Service');
 
-			$repositoryName = substr($className, 0, strrpos($className, 'Service'));
+			$repositoryName = substr($serviceName, 0, strrpos($serviceName, 'Service'));
 			$repositoryName .= 'Repository';
 			$service->setRepositoryName($repositoryName);
 		}
