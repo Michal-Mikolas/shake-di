@@ -40,9 +40,9 @@ class Container extends Nette\DI\Container
 				return $this->registry[$name];
 			}
 
-			// Service
-			if (strrpos($name, 'Service') === (strlen($name) - 7)) {
-				$this->registry[$name] = $this->createAppService($name);
+			// Manager
+			if (strrpos($name, 'Manager') === (strlen($name) - 7)) {
+				$this->registry[$name] = $this->createManager($name);
 				return $this->registry[$name];
 			}
 
@@ -116,25 +116,25 @@ class Container extends Nette\DI\Container
 	 * @param string
 	 * @return object
 	 */
-	private function createAppService($serviceName)
+	private function createManager($serviceName)
 	{
 		$className = $serviceName;
 		$className[0] = strtoupper($className[0]);
 
-		// User's service
+		// User's manager
 		if (class_exists($className)) {
-			$service = $this->createInstance($className);
+			$manager = $this->createInstance($className);
 
-		// Virtual service
+		// Virtual manager
 		} else {
-			$service = $this->createInstance('Shake\Scaffolding\Service');
+			$manager = $this->createInstance('Shake\Scaffolding\Manager');
 
-			$repositoryName = substr($className, 0, strrpos($className, 'Service'));
+			$repositoryName = substr($className, 0, strrpos($className, 'Manager'));
 			$repositoryName .= 'Repository';
-			$service->setRepositoryName($repositoryName);
+			$manager->setRepositoryName($repositoryName);
 		}
 
-		return $service;
+		return $manager;
 	}
 
 }
