@@ -30,7 +30,7 @@ class Container extends Nette\DI\Container
 		// Base Nette service loading
 		try {
 			return parent::getService($name);
-		
+
 		// Try automatic creation
 		} catch (Nette\DI\MissingServiceException $e) {
 
@@ -78,7 +78,7 @@ class Container extends Nette\DI\Container
 		// User's repository
 		if (class_exists($className)) {
 			$repository = $this->createInstance($className, $repositoryDependencies);
-		
+
 		// Virtual repository
 		} else {
 			$repository = $this->createInstance('Shake\Scaffolding\Repository', $repositoryDependencies);
@@ -102,12 +102,12 @@ class Container extends Nette\DI\Container
 	{
 		if ($databaseContext = $this->getByType('Shake\\Database\\Orm\\Context', FALSE)) {
 			return array($databaseContext);
-		
+
 		} elseif ($databaseContext = $this->getByType('Nette\\Database\\Context', FALSE)) {
 			return array($databaseContext);
 		}
 
-		return array();	
+		return array();
 	}
 
 
@@ -124,7 +124,7 @@ class Container extends Nette\DI\Container
 		// User's service
 		if (class_exists($className)) {
 			$service = $this->createInstance($className);
-		
+
 		// Virtual service
 		} else {
 			$service = $this->createInstance('Shake\Scaffolding\Service');

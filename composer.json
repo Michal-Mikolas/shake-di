@@ -11,20 +11,6 @@
 		}
 	],
 	"minimum-stability": "dev",
-	"repositories": [
-		{
-			"type": "package",
-			"package": {
-				"name": "jrslv/vp-nette-bootstrap",
-				"version": "master",
-				"source": {
-					"url": "https://github.com/jrslv/vp-nette-bootstrap.git",
-					"type": "git",
-					"reference": "master"
-				}
-			}
-		}
-	],
 	"autoload": {
 		"classmap": [""]
 	},
