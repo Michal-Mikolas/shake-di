@@ -72,19 +72,23 @@ class Container extends Nette\DI\Container
 	{
 		$className = $serviceName;
 		$className[0] = strtoupper($className[0]);
+		$className = "App\\Model\\" . $className;
 
 		$repositoryDependencies = $this->findRepositoryDependencies();
 
 		// User's repository
 		if (class_exists($className)) {
 			$repository = $this->createInstance($className, $repositoryDependencies);
+			$this->callInjects($repository);
 
 		// Virtual repository
 		} else {
 			$repository = $this->createInstance('Shake\Scaffolding\Repository', $repositoryDependencies);
 
-			$tableName = substr($className, 0, strrpos($className, 'Repository'));
-			$tableName = Strings::toUnderscoreCase($tableName);
+			$className;                                                             // App\Model\FooBarRepository
+			$tableName = substr($className, 0, strrpos($className, 'Repository'));  // App\Model\FooBar
+			$tableName = substr($tableName, strrpos($tableName, '\\') + 1);         // FooBar
+			$tableName = Strings::toUnderscoreCase($tableName);                     // foo_bar
 			$repository->setTableName($tableName);
 		}
 
@@ -120,10 +124,12 @@ class Container extends Nette\DI\Container
 	{
 		$className = $serviceName;
 		$className[0] = strtoupper($className[0]);
+		$className = "App\\Model\\" . $className;
 
 		// User's manager
 		if (class_exists($className)) {
 			$manager = $this->createInstance($className);
+			$this->callInjects($manager);
 
 		// Virtual manager
 		} else {
